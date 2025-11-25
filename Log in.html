@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      background: #f5f5f5;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -19,36 +19,11 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       width: 350px;
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    .error {
-      color: red;
-      text-align: center;
-      margin-top: 10px;
-    }
+    h2 { text-align: center; margin-bottom: 20px; }
+    input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+    button { width: 100%; padding: 10px; border: none; border-radius: 5px; background: #4CAF50; color: white; font-size: 16px; cursor: pointer; }
+    button:hover { background: #45a049; }
+    .error { color: red; text-align: center; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -75,8 +50,8 @@
       return;
     }
 
-    // Corrected fetch using template literals
-    fetch(`${https://script.google.com/macros/s/AKfycbxlozKnBF27UcbL_76dMfsGm_y_0JLASU3WxNAM2BIOD3QNTd2rH4PVJ8UdinTjoK7QWA/exec?view=all}?action=login&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`)
+    // Send login request to Google Script
+    fetch(`${WEBAPP_URL}?action=login&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`)
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -95,7 +70,7 @@
 
   // Auto redirect if already logged in
   window.onload = function() {
-    if(sessionStorage.getItem("loggedIn")) {
+    if (sessionStorage.getItem("loggedIn")) {
       window.location.href = "dashboard.html";
     }
   }
@@ -103,5 +78,3 @@
 
 </body>
 </html>
-
-
