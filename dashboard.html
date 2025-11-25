@@ -20,8 +20,8 @@
 <h1>Admin Dashboard</h1>
 
 <div class="topbar">
-  <button onclick="window.location.href='index.html'">Register Student</button>
-  <button onclick="window.location.href='search.html'">Search Student</button>
+  <button onclick="alert('Register student clicked')">Register Student</button>
+  <button onclick="alert('Search student clicked')">Search Student</button>
   <button onclick="logout()">Logout</button>
 </div>
 
@@ -53,49 +53,55 @@
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxlozKnBF27UcbL_76dMfsGm_y_0JLASU3WxNAM2BIOD3QNTd2rH4PVJ8UdinTjoK7QWA/exec";
 
-window.onload = function() {
-  if (!sessionStorage.getItem("loggedIn")) {
-    window.location.href = "login.html";
-    return;
-  }
-  loadData();
-};
+// Redirect to login if not logged in
+if (!sessionStorage.getItem("loggedIn")) {
+  window.location.href = "login.html";
+}
 
 function logout() {
   sessionStorage.removeItem("loggedIn");
   window.location.href = "login.html";
 }
 
+// Fetch data from Google Sheets
 function loadData() {
-  fetch("https://script.google.com/macros/s/AKfycbxlozKnBF27UcbL_76dMfsGm_y_0JLASU3WxNAM2BIOD3QNTd2rH4PVJ8UdinTjoK7QWA/exec?view=all")
+  fetch(`${SCRIPT_URL}?view=all`)
     .then(res => res.json())
     .then(data => {
-      let tableBody = document.querySelector("#dataTable tbody");
-      tableBody.innerHTML = "";
-
+      const tbody = document.querySelector("#dataTable tbody");
+      tbody.innerHTML = "";
       data.forEach(row => {
-        let tr = document.createElement('tr');
+        const tr = document.createElement('tr');
         row.forEach(cell => {
-          let td = document.createElement('td');
+          const td = document.createElement('td');
           td.textContent = cell;
           tr.appendChild(td);
         });
-        tableBody.appendChild(tr);
+        tbody.appendChild(tr);
       });
     })
     .catch(err => console.error("Error loading data:", err));
 }
 
+// Filter table rows
 function filterTable() {
-  let input = document.getElementById("searchBar").value.toLowerCase();
-  let rows = document.querySelectorAll("#dataTable tbody tr");
-
-  rows.forEach(r => {
-    let text = r.textContent.toLowerCase();
-    r.style.display = text.includes(input) ? "" : "none";
+  const input = document.getElementById("searchBar").value.toLowerCase();
+  document.querySelectorAll("#dataTable tbody tr").forEach(r => {
+    r.style.display = r.textContent.toLowerCase().includes(input) ? "" : "none";
   });
 }
+
+// Load data on page load
+window.onload = loadData;
 </script>
 
 </body>
 </html>
+
+
+      
+
+
+
+
+   
