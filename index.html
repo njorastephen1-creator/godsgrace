@@ -17,10 +17,10 @@
 <form id="attendanceForm">
 
     <label>Student Name:</label>
-    <input type="text" name="studentName" required>
+    <input type="text" id="studentName" required>
 
     <label>Phone Number:</label>
-    <select name="countryCode" required>
+    <select id="countryCode" required>
         <option value="+254">+254 Kenya</option>
         <option value="+256">+256 Uganda</option>
         <option value="+255">+255 Tanzania</option>
@@ -28,85 +28,85 @@
         <option value="+257">+257 Burundi</option>
         <option value="+211">+211 South Sudan</option>
     </select>
-    <input type="text" name="phoneNumber" placeholder="712345678" required>
+    <input type="text" id="phoneNumber" placeholder="712345678" required>
 
     <label>Class Number:</label>
-    <input type="number" name="classNumber" required>
+    <input type="number" id="classNumber" required>
 
     <h3>Lessons</h3>
 
     <div class="lesson-row">Salvation:
-        <select name="salvation">
+        <select id="salvation">
             <option>Yes</option>
             <option>No</option>
         </select>
     </div>
 
     <div class="lesson-row">Temptation:
-        <select name="temptation">
+        <select id="temptation">
             <option>Yes</option>
             <option>No</option>
         </select>
     </div>
 
     <div class="lesson-row">Prayers:
-        <select name="prayers">
+        <select id="prayers">
             <option>Yes</option>
             <option>No</option>
         </select>
     </div>
 
     <div class="lesson-row">The Bible:
-        <select name="bible">
+        <select id="bible">
             <option>Yes</option>
             <option>No</option>
         </select>
     </div>
 
     <div class="lesson-row">Fellowship:
-        <select name="fellowship">
+        <select id="fellowship">
             <option>Yes</option>
             <option>No</option>
         </select>
     </div>
 
     <div class="lesson-row">Bearing Fruits / Witnessing:
-        <select name="witnessing">
+        <select id="witnessing">
             <option>Yes</option>
             <option>No</option>
         </select>
     </div>
 
     <div class="lesson-row">Baptism:
-        <select name="baptism">
+        <select id="baptism">
             <option>Yes</option>
             <option>No</option>
         </select>
     </div>
 
     <div class="lesson-row">Holy Spirit:
-        <select name="holySpirit">
+        <select id="holySpirit">
             <option>Yes</option>
             <option>No</option>
         </select>
     </div>
 
     <div class="lesson-row">Giving:
-        <select name="giving">
+        <select id="giving">
             <option>Yes</option>
             <option>No</option>
         </select>
     </div>
 
     <div class="lesson-row">Deliverance:
-        <select name="deliverance">
+        <select id="deliverance">
             <option>Yes</option>
             <option>No</option>
         </select>
     </div>
 
     <div class="lesson-row">Evangelism:
-        <select name="evangelism">
+        <select id="evangelism">
             <option>Yes</option>
             <option>No</option>
         </select>
@@ -117,18 +117,49 @@
 </form>
 
 <script>
-document.getElementById("attendanceForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw3AD3KvWh4Zo2LVXCDn333HiygOfvVOIuuBnp3pYLjektiawKGOzrwLxQiDUqJw6erVw/exec";
 
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
+document.getElementById("attendanceForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
 
-    fetch("https://script.google.com/macros/s/AKfycbxlozKnBF27UcbL_76dMfsGm_y_0JLASU3WxNAM2BIOD3QNTd2rH4PVJ8UdinTjoK7QWA/exec", {
-        method: "POST",
-        body: JSON.stringify(data)
-    })
-    .then(res => alert("Submitted successfully"))
-    .catch(err => alert("Error submitting"));
+    const data = {
+        action: "submitAttendance",
+        studentName: document.getElementById("studentName").value,
+        countryCode: document.getElementById("countryCode").value,
+        phoneNumber: document.getElementById("phoneNumber").value,
+        classNumber: document.getElementById("classNumber").value,
+        salvation: document.getElementById("salvation").value,
+        temptation: document.getElementById("temptation").value,
+        prayers: document.getElementById("prayers").value,
+        bible: document.getElementById("bible").value,
+        fellowship: document.getElementById("fellowship").value,
+        witnessing: document.getElementById("witnessing").value,
+        baptism: document.getElementById("baptism").value,
+        holySpirit: document.getElementById("holySpirit").value,
+        giving: document.getElementById("giving").value,
+        deliverance: document.getElementById("deliverance").value,
+        evangelism: document.getElementById("evangelism").value
+    };
+
+    try {
+        const response = await fetch(WEBAPP_URL, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: { "Content-Type": "application/json" }
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+            alert("Form submitted successfully!");
+            document.getElementById("attendanceForm").reset();
+        } else {
+            alert("Server error: " + result.error);
+        }
+
+    } catch (err) {
+        alert("Error connecting to server: " + err);
+    }
 });
 </script>
 
