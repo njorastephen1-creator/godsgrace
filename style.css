@@ -1,0 +1,89 @@
+/* Basic body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+/* Form container */
+form {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+h2 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #555555;
+}
+
+/* Inputs and selects */
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    box-sizing: border-box;
+}
+
+/* Lesson rows */
+.lesson-row {
+    margin-top: 10px;
+}
+
+/* Submit button */
+button {
+    display: block;
+    width: 30%;
+    padding: 12px;
+    margin-top: 25px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive adjustments for small screens */
+@media (max-width: 600px) {
+    form {
+        padding: 20px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .lesson-row {
+        margin-top: 8px;
+    }
+}
